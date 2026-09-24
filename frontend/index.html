@@ -1,0 +1,118 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>Resume Match</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@500;600;700&family=Inter:wght@400;500;600&family=IBM+Plex+Mono:wght@400;500&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="/static/style.css" />
+</head>
+<body>
+<div class="wrap">
+
+  <header class="top">
+    <p class="eyebrow">Resume &times; Job Match</p>
+    <h1>How well does this resume fit the job?</h1>
+    <p>Upload a resume and paste a job description. It's scored on degree level, major, and AI-based skill similarity — you'll get a percentage match plus a breakdown of why.</p>
+  </header>
+
+  <form id="matchForm">
+    <div class="input-grid">
+      <div class="field">
+        <label for="resumeFile">Resume</label>
+        <div class="dropzone" id="dropzone" tabindex="0">
+          <input type="file" id="resumeFile" accept=".pdf,.docx" />
+          <div id="dzIdle">
+            <div class="dz-icon">↑</div>
+            <div class="dz-title">Drop a file or click to browse</div>
+            <div class="dz-sub">PDF or DOCX, up to 5MB</div>
+          </div>
+          <div id="dzFile" style="display:none;">
+            <div class="dz-icon">✓</div>
+            <div class="dz-filename" id="dzFilename"></div>
+            <button type="button" class="clear-file" id="clearFile">remove</button>
+          </div>
+        </div>
+      </div>
+
+      <div class="field">
+        <label for="jobDescription">Job description</label>
+        <textarea id="jobDescription" placeholder="Paste the full job posting here — requirements, responsibilities, and all."></textarea>
+      </div>
+    </div>
+
+    <div class="submit-row">
+      <button type="submit" class="primary" id="submitBtn">Analyze match</button>
+    </div>
+  </form>
+
+  <div class="status-line" id="statusLine"></div>
+  <div class="error-banner" id="errorBanner"></div>
+
+  <div id="results">
+    <div class="score-card">
+      <div class="score-number" id="scoreNumber">0%</div>
+      <div class="score-label">overall match</div>
+      <div class="breakdown">
+        <div class="breakdown-item">
+          <div class="breakdown-head"><span>Degree</span><strong id="degreeVal">0%</strong></div>
+          <div class="bar-track"><div class="bar-fill" id="degreeBar" style="width:0%"></div></div>
+        </div>
+        <div class="breakdown-item">
+          <div class="breakdown-head"><span>Major</span><strong id="majorVal">0%</strong></div>
+          <div class="bar-track"><div class="bar-fill" id="majorBar" style="width:0%"></div></div>
+        </div>
+        <div class="breakdown-item">
+          <div class="breakdown-head"><span>Skills</span><strong id="skillsVal">0%</strong></div>
+          <div class="bar-track"><div class="bar-fill" id="skillsBar" style="width:0%"></div></div>
+        </div>
+      </div>
+    </div>
+
+    <div class="compare-grid">
+      <div class="panel">
+        <h3>Found in the resume</h3>
+        <div class="entity-row">
+          <div class="entity-label">Degree level</div>
+          <div class="chips" id="resumeDegrees"></div>
+        </div>
+        <div class="entity-row">
+          <div class="entity-label">Majors</div>
+          <div class="chips" id="resumeMajors"></div>
+        </div>
+        <div class="entity-row">
+          <div class="entity-label">Skills</div>
+          <div class="chips" id="resumeSkills"></div>
+        </div>
+      </div>
+      <div class="panel">
+        <h3>Required by the job</h3>
+        <div class="entity-row">
+          <div class="entity-label">Minimum degree</div>
+          <div class="chips" id="jobDegree"></div>
+        </div>
+        <div class="entity-row">
+          <div class="entity-label">Acceptable majors</div>
+          <div class="chips" id="jobMajors"></div>
+        </div>
+        <div class="entity-row">
+          <div class="entity-label">Skills</div>
+          <div class="chips" id="jobSkills"></div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <p class="note">
+    Matching runs on entity extraction (spaCy) plus AI semantic similarity (sentence-transformers) —
+    it recognizes degrees, majors and skills from a curated set of patterns, so very unconventional
+    phrasing may not be picked up. Nothing you submit is stored unless a database is connected.
+  </p>
+
+  <footer>AI Resume Analyzer · <a href="/docs">API docs</a></footer>
+</div>
+
+<script src="/static/app.js"></script>
+</body>
+</html>

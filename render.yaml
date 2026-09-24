@@ -1,0 +1,6 @@
+services:
+  - type: web
+    name: resume-match-ai
+    runtime: docker
+    dockerfilePath: ./Dockerfile
+    autoDeploy: true

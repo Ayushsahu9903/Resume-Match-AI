@@ -1,0 +1,10 @@
+__pycache__/
+*.pyc
+.git
+.gitignore
+.gitattributes
+.env
+.venv
+Resources/Project documentation/
+services/Models evaluation.ipynb
+README.md
